@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Responsables;
+namespace HermesHerrera\Http;
 
 use Illuminate\Contracts\Support\Responsable;
 
