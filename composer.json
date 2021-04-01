@@ -1,0 +1,18 @@
+{
+    "name": "hermesherrera/laravel-tools",
+    "description": "Herramientas para usar en Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hermes Herrera Capacho",
+            "email": "hermesherrera@hecatech.co"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "HermesHerrera\\LaravelTools\\": "/"
+        }
+    }
+}
