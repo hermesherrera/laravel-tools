@@ -1,6 +1,6 @@
 <?php
 
-namespace HermesHerrera\Http;
+namespace HermesHerrera\LaravelTools\Http;
 
 use Illuminate\Contracts\Support\Responsable;
 
@@ -9,39 +9,41 @@ class ResponsableJson implements Responsable {
     protected $datos;
     protected $codeHtml;
     protected $mensaje;
-    protected $otrosDatos;
+    protected $datosArray;
 
-    public function __construct($codeHtml, $datos = null, $mensaje = null, $otrosDatos = null){
+    public function __construct($codeHtml, $datos = null, $mensaje = null, $datosArray = null){
 
-        $this->datos        = $datos;
-        $this->codeHtml     = $codeHtml;
-        $this->mensaje      = $mensaje;
-        $this->otrosDatos   = $otrosDatos;
-
+	$this->datos = $datos;
+	$this->datosArray = $datosArray;
+        $this->codeHtml = $codeHtml;
+        $this->mensaje = $mensaje;
     }
 
-    public function toResponse($request){
+    public function toResponse($request)
+    {
+	$datos = $this->datos;
 
-        $datos = null;
+	if ( $datos ) {
+	    if ( property_exists( $datos, 'collection' ) && gettype( $datos->collection ) === 'object' ){
+		$datos = $datos->resource;
+	    } else if ( property_exists( $datos, 'resource' ) && gettype( $datos->resource ) === 'object' ){
+		$datos = $datos;
+	    }
+	}
 
-        if ( $this->mensaje ) {
-
-            $datos['mensaje'] =$this->mensaje;
-        }
-
-        if ( $this->datos ) {
-
-            $datos['datos'] = $this->datos;
-
-        }
-
-        if ( $this->otrosDatos ) {
-
-            $datos = $this->otrosDatos;
-
-        }
+	if ( $this->mensaje ){
+	    if ( $datos ){
+		$datos = [
+		    'mensaje' => $this->mensaje,
+		    'datos' => $datos
+		];
+	    } else {
+		$datos = [
+		    'mensaje' => $this->mensaje
+		];
+	    }
+	}
 
         return response()->json($datos, $this->codeHtml);
-
     }
 }

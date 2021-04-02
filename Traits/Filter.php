@@ -1,6 +1,6 @@
 <?php
 
-namespace HermesHerrera\Traits;
+namespace HermesHerrera\LaravelTools\Traits;
 
 use Illuminate\Pipeline\Pipeline;
 
